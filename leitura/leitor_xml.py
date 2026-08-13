@@ -398,6 +398,77 @@ class LeitorXML:
             formaPagamento
         )
 
+    def buscar_produtos(self, caminho_xml):
+
+        arvore = ET.parse(caminho_xml) # Lê o arquivo XML e cria uma árvore com todos os seus elementos.
+
+        # Obtém a raiz da árvore (primeira tag do XML).
+        raiz = arvore.getroot()
+        # Define o namespace utilizado no XML da NF-e/NFC-e.
+        namespace = {
+            "nfe": "http://www.portalfiscal.inf.br/nfe"
+        }
+
+        # Procura a tag NFe dentro da raiz do XML.
+        NFe = raiz.find("nfe:NFe", namespace)
+
+        # Procura a tag infNFe dentro da tag NFe.
+        infNFe = NFe.find("nfe:infNFe", namespace)
+
+        # Procura a tag ide, que contém as informações de identificação da nota fiscal.
+        ide = infNFe.find("nfe:ide", namespace)
+
+        # Procura a lista de produtos na tag det
+        produtos = infNFe.findall("nfe:det", namespace)
+
+        produtos_dados = []
+
+            # Para cada produto encontrado
+        for produto in produtos: 
+
+            # Procura os produtos na tag prod
+            prod = produto.find("nfe:prod", namespace)
+
+            # Procura o codigo do produto
+            codigo = prod.find("nfe:cProd", namespace)
+
+
+            # Procura a descricao do produto
+            descricao = prod.find("nfe:xProd", namespace)
+
+
+            # Procura o NCM do produto
+            ncm = prod.find("nfe:NCM", namespace)
+
+
+            # Procura o CFOP do produto
+            cfop = prod.find("nfe:CFOP", namespace)
+
+
+            # Procura a unidade 
+            unidade = prod.find("nfe:uCom", namespace)
+
+
+            # Procura a quantidade do produto
+            quantidade = prod.find("nfe:qCom", namespace)
+
+
+            # Procura o valor do produto
+            valorUnitario = prod.find("nfe:vUnCom", namespace)
+
+
+            # Procura o valor do total quantidade vezes valor do produto
+            valorProduto = prod.find("nfe:vProd", namespace)
+
+
+        return produtos_dados
+
+
+
+
+
+        
+
 
             
 
