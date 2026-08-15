@@ -15,6 +15,10 @@ class JanelaPrincipal:
         self.janela.title("Leitor de XML 2.0") # Define o título da janela
         self.janela.minsize(1000, 700) # Define o tamanho mínimo da janela
 
+        self.arquivos_notas = {}
+
+        self.leitor = LeitorXML()
+
         # Define o Frame
         self.frame_cabecalho = tk.Frame( # Cria o Frame do cabeçalho
             self.janela, # O Frame pertence à janela principal
@@ -143,22 +147,21 @@ class JanelaPrincipal:
         
         # Exibe a tabela na janela
         self.tabela.pack()
-    
+
+        self.produtos_nota = ttk.Treeview(
+            self.janela
+        )
 
     def selecionar_nota(self, evento):
         notaSelecionada = self.tabela.selection()
         id_item = notaSelecionada[0]
-        caminho_xml = notaSelecionada[id_item]
+        caminho_xml = self.arquivos_notas[id_item]
+        produtos = self.leitor.buscar_produtos(caminho_xml)
+        print(produtos)
         
-
-
-        
-        print(caminho_xml)
 
     def importar_xml(self): # Cria a funcao importar_xml
         caminho = filedialog.askdirectory() # Abre o explorador de pastas
-
-        leitor = LeitorXML() # Cria um objeto da classe LeitorXML, responsável por abrir e ler os arquivos XML.
 
         if caminho: # Se a variavel caminho estiver preenchida escreve no console a pasta que abriu
             print(caminho) 
@@ -188,9 +191,9 @@ class JanelaPrincipal:
                 print(arquivo)
                 caminho_arquivo = os.path.join(caminho, arquivo) # Junta o caminho da pasta com o nome do arquivo para obter o caminho completo do XML.
 
-                dados = leitor.abrir_xml(caminho_arquivo) # Chama o método abrir_xml() para abrir e ler o arquivo XML.
+                dados = self.leitor.abrir_xml(caminho_arquivo) # Chama o método abrir_xml() para abrir e ler o arquivo XML.
 
-                produtos = leitor.buscar_produtos(caminho_arquivo)
+                produtos = self.leitor.buscar_produtos(caminho_arquivo)
 
                 print(produtos)
 
@@ -209,6 +212,7 @@ class JanelaPrincipal:
                 valor_total += dados[5]
 
                 id_item = self.tabela.insert("", "end", values=dados)
+                self.arquivos_notas[id_item] = caminho_arquivo
                 arquivos_notas[id_item] = caminho_arquivo
 
                 quantidade_xml += 1 # acrescenta um no contador de XML

@@ -421,6 +421,7 @@ class LeitorXML:
         # Procura a lista de produtos na tag det
         produtos = infNFe.findall("nfe:det", namespace)
 
+
         produtos_dados = []
 
             # Para cada produto encontrado
@@ -460,6 +461,19 @@ class LeitorXML:
             # Procura o valor do total quantidade vezes valor do produto
             valorProduto = prod.find("nfe:vProd", namespace)
 
+
+        dados_produto = (
+            codigo.text,
+            descricao.text,
+            ncm.text,
+            cfop.text,
+            unidade.text,
+            quantidade.text,
+            valorUnitario.text,
+            valorProduto.text
+        )
+
+        produtos_dados.append(dados_produto)
 
         return produtos_dados
 
