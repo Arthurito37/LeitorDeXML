@@ -148,9 +148,27 @@ class JanelaPrincipal:
         # Exibe a tabela na janela
         self.tabela.pack()
 
-        self.produtos_nota = ttk.Treeview(
-            self.janela
+        colunas_produtos = (
+            "Código",
+            "Descrição",
+            "NCM",
+            "CFOP",
+            "Unidade",
+            "Quantidade",
+            "Valor Unitário",
+            "Valor Total"
         )
+
+        self.produtos_nota = ttk.Treeview(
+            self.janela,
+            columns=colunas_produtos,
+            show="headings"
+        )
+
+        for col in colunas_produtos:
+            self.produtos_nota.heading(col, text=col)
+
+        self.produtos_nota.pack(pady=20)
 
     def selecionar_nota(self, evento):
         notaSelecionada = self.tabela.selection()
@@ -158,7 +176,10 @@ class JanelaPrincipal:
         caminho_xml = self.arquivos_notas[id_item]
         produtos = self.leitor.buscar_produtos(caminho_xml)
         print(produtos)
-        
+        for item in self.produtos_nota.get_children():
+            self.produtos_nota.delete(item)
+        for produto in produtos:
+            self.produtos_nota.insert("", "end", values=produto)
 
     def importar_xml(self): # Cria a funcao importar_xml
         caminho = filedialog.askdirectory() # Abre o explorador de pastas
