@@ -86,7 +86,7 @@ O sistema identifica o modelo diretamente através da estrutura do XML.
 Clone o repositório:
 
 ```bash
-git clone https://github.com/SEU-USUARIO/LeitorDeXML.git
+git clone https://github.com/Arthurito37/LeitorDeXML.git
 ```
 
 Entre na pasta do projeto:
@@ -182,9 +182,9 @@ O projeto continua em desenvolvimento.
 
 Algumas funcionalidades planejadas:
 
-* [ ] Extração completa dos campos principais da NF-e/NFC-e
-* [ ] Processamento dos produtos
-* [ ] Extração dos valores dos itens
+* [X] Extração completa dos campos principais da NF-e/NFC-e
+* [X] Processamento dos produtos
+* [X] Extração dos valores dos itens
 * [ ] Processamento de impostos
 * [ ] Leitura e organização do ICMS
 * [ ] Processamento de outros tributos
